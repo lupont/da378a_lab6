@@ -11,7 +11,7 @@ Interpreter::Interpreter(ostream& out_stream)
     current_base = DEC;
 }
 
-bool Interpreter::is_int(string value)
+bool Interpreter::is_int(const string value) const
 {
     if (value[0] != '-' && !isdigit(value[0]))
         return false;
@@ -23,7 +23,7 @@ bool Interpreter::is_int(string value)
     return true;
 }
 
-bool Interpreter::is_variable(string value)
+bool Interpreter::is_variable(const string value) const
 {
     if (!isalpha(value[0]))
         return false;
@@ -204,7 +204,7 @@ vector<string> Interpreter::tokenize(const string& line)
     return tokens;
 }
 
-string Interpreter::peek()
+string Interpreter::peek() const
 {
     if (position >= tokens.size()) 
         return ETX;

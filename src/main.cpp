@@ -33,9 +33,7 @@ void read_file(const char* file_path)
         return;
     
     while (getline(file, line))
-    {
         it.evaluate(it.tokenize(line));
-    }
 }
 
 int main(int argc, char** argv)

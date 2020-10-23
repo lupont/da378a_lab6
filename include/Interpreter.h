@@ -20,8 +20,8 @@ private:
     std::vector<std::string> tokens;
     std::string current_base;
 
-    bool is_int(std::string);
-    bool is_variable(std::string);
+    bool is_int(const std::string) const;
+    bool is_variable(const std::string) const;
 
     void parse_config_stmt();
     void parse_print_stmt();
@@ -38,7 +38,7 @@ public:
     void evaluate(const std::vector<std::string>& tokens);
     std::vector<std::string> tokenize(const std::string& line);
 
-    std::string peek();
+    std::string peek() const;
     void consume(const std::string& token);
 };
 

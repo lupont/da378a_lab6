@@ -13,7 +13,7 @@ Interpreter::Interpreter(ostream& out_stream)
 
 bool Interpreter::is_int(const string value) const
 {
-    if (value[0] != '-' && !isdigit(value[0]))
+    if (value[0] != '-' && !isdigit(value[0]) || (value.size() == 1 && !isdigit(value[0])))
         return false;
 
     for (int i = 1; i < value.length(); i++)

@@ -112,12 +112,12 @@ int Interpreter::parse_sum_exp()
     {
         if (next_token == "+")
         {
-            consume("+");
+            consume(next_token);
             result += parse_product_exp();
         }
         else if (next_token == "-")
         {
-            consume("-");
+            consume(next_token);
             result -= parse_product_exp();
         }
         else break;
@@ -137,12 +137,12 @@ int Interpreter::parse_product_exp()
     {
         if (next_token == "*")
         {
-            consume("*");
+            consume(next_token);
             result *= parse_primary_exp();
         }
         else if (next_token == "/")
         {
-            consume("/");
+            consume(next_token);
             int value = parse_primary_exp();
 
             if (value == 0)

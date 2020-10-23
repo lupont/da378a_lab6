@@ -37,14 +37,12 @@ void Interpreter::evaluate(const vector<string>& tokens)
 void Interpreter::config()
 {
     if (tokens.size() != 2)
-        throw std::runtime_error("Wrong number of arguments for confid statement.");
+        throw std::runtime_error("Wrong number of arguments for config statement.");
 
     string value = peek();
 
     if (value != "dec" && value != "hex" && value != "bin")
-    {
         throw std::runtime_error(value + " is not a permitted value for config statement.");
-    }
 
     current_base = value;
     consume(value);
@@ -57,7 +55,7 @@ void Interpreter::print()
     if (current_base == "bin")
         out_stream << bitset<32>(value).to_string() << endl;
     else if (current_base == "hex")
-        out_stream << std::hex << "0x" << value << endl;
+        out_stream << hex << "0x" << value << endl;
     else 
         out_stream << dec << value << endl;
 }
@@ -66,18 +64,13 @@ void Interpreter::assign()
 {
     string var_name = peek();
 
-    if (!isalpha(var_name[0]))
-        throw runtime_error("Variables must start with a letter.");
-
-    if (var_name.size() > 1)
-        for (int i = 1; i < var_name.size(); i++)
-            if (!isalpha(var_name[i]) && !isdigit(var_name[i]))
-                throw runtime_error("Variables must contain only letters and numbers.");
+    if (!is_variable(var_name))
+        throw runtime_error("Variable must begin with a letter and contain letters and digits only.");
 
     consume(var_name);
     consume("=");
-    int value = parse_MathExp();
 
+    int value = parse_MathExp();
     symbol_table[var_name] = value;
 }
 
@@ -166,7 +159,7 @@ int Interpreter::parse_PrimaryExp()
     else if (is_variable(next_token))
     {
         if (symbol_table.find(next_token) == symbol_table.end())
-            throw runtime_error("Variable not exist!!!");
+            throw runtime_error("Variable not set.");
 
         consume(next_token);
         return symbol_table[next_token];
@@ -206,9 +199,7 @@ vector<string> Interpreter::tokenize(const string& line)
     string token;
 
     while (getline(stream, token, ' '))
-    {
         tokens.push_back(token);
-    }
 
     return tokens;
 }
@@ -236,30 +227,5 @@ void Interpreter::consume(const string& token)
         throw std::runtime_error("Could not consume token " + token + "\n");
 
     ++position;
-}
-
-string Interpreter::to_string()
-{
-    string ret = "Interpreter { current_base = \"" + current_base + "\", tokens = [";
-
-    for (int i = 0; i < tokens.size(); i++)
-    {
-        string token = tokens[i];
-        ret += "\"" + token + "\"";
-        if (i < tokens.size() - 1)
-            ret += ", ";
-    }
-
-    ret += "], symbol_table = { ";
-
-    for (auto pair : symbol_table)
-    {
-        ret += "\"" + pair.first + "\": " + std::to_string(pair.second);
-        ret += " ";
-    }
-
-    ret += "} }";
-
-    return ret;
 }
 

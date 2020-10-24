@@ -23,9 +23,9 @@ void repl()
     }
 }
 
-void read_file(const char* file_path)
+void read_file(const char* file_path, ostream& out_stream)
 {
-    Interpreter it(cout);
+    Interpreter it(out_stream);
     ifstream file(file_path);
     string line;
 
@@ -34,12 +34,22 @@ void read_file(const char* file_path)
     
     while (getline(file, line))
         it.evaluate(it.tokenize(line));
+
+    if (file.is_open())
+        file.close();
 }
 
 int main(int argc, char** argv)
 {
-    if (argc == 2)
-        read_file(argv[1]);
+    if (argc == 3)
+    {
+        ofstream output_file(argv[2]);
+        read_file(argv[1], output_file);
+        if (output_file.is_open())
+            output_file.close();
+    }
+    else if (argc == 2)
+        read_file(argv[1], cout);
     else
         repl();
 }

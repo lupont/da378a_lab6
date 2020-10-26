@@ -91,6 +91,11 @@ public:
      */
     Interpreter(std::ostream& out_stream);
 
+    // Delete copy constructor, there exists
+    // no reason for it to exist within the
+    // scope of this program.
+    Interpreter(const Interpreter& rhs) = delete;
+
     /**
      * Evaluates a line of tokenized C@ code.
      */

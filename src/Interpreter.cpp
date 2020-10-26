@@ -345,13 +345,13 @@ void Interpreter::consume(const string& token)
     // If it is at the end, throw because
     // there are no tokens to consume.
     if (next_token == ETX)
-        throw std::runtime_error("Consumed past last token\n");
+        throw runtime_error("Consumed past last token.");
 
     // If the next token in the vector does
     // not match the supplied one, throw 
     // because something has gone wrong.
     if (next_token != token)
-        throw std::runtime_error("Could not consume token " + token + "\n");
+        throw runtime_error("Could not consume token " + token + ".");
 
     // Advance the current position.
     ++position;

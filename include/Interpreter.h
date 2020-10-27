@@ -96,6 +96,11 @@ public:
     // scope of this program.
     Interpreter(const Interpreter& rhs) = delete;
 
+    // Delete copy assignment, there exists
+    // no reason for it to exist within the
+    // scope of this program.
+    Interpreter& operator=(const Interpreter& rhs) = delete;
+
     /**
      * Evaluates a line of tokenized C@ code.
      */
